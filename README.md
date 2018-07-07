@@ -8,7 +8,7 @@ The operation makes a copy of the input array, the original array and it's eleme
 
 The method expects an input array with elements matching the following signature, only start and end properties are required. offsetStart and index default to 0.
 
-Indexes are normalized back to 0, so three intervals with indexes 3, 5 and 10 will be normalized to 0, 1, 2.
+Indexes are normalized back to 1, so three intervals with indexes 3, 5 and 10 will be normalized to 1, 2, 3.
 
 ## Installation
 ```sh
