@@ -69,7 +69,7 @@
     return intervals.map(function (i) {
       return _extends({}, i, {
         offsetStart: i.offsetStart || 0,
-        index: i.index || 0
+        index: i.index || 1
       });
     });
   };

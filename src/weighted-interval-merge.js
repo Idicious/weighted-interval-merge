@@ -46,7 +46,7 @@ export const weightedIntervalMerge =  intervals => {
 const copy = (intervals) => intervals.map(i => ({ 
   ...i,
   offsetStart: i.offsetStart || 0,
-  index: i.index || 0,
+  index: i.index || 1,
 }));
   
 
