@@ -32,12 +32,20 @@
    */
 
   /**
+   * @param {Interval} interval
+   */
+  var calcStart = function calcStart(interval) {
+    return interval.start + interval.offsetStart;
+  };
+
+  /**
    * The algorithm first calculates real start and end times of each segment,
    * sorts them by priority, then start time.
    *
    * Finally it merges the segments by index so there are no overlapping
    * segments and those with highest index are on top.
    *
+   * @export
    * @param {Interval[]} intervals Segments to flatten
    * @returns {Interval[]} flattened Interval array
    */
@@ -53,33 +61,24 @@
   };
 
   /**
-   * Returns the start time of an interval based on it's start and offset start
-   * 
-   * @param {Interval} interval 
-   * @returns {number} 
-   */
-  var calcStart = function calcStart(interval) {
-    return interval.start + interval.offsetStart;
-  };
-
-  /**
    * Copies elements so original are unaltered
    * 
    * @param {Interval[]} intervals 
-   * @returns {Interval[]}
    */
   var copy = function copy(intervals) {
     return intervals.map(function (i) {
-      return _extends({}, i);
+      return _extends({}, i, {
+        offsetStart: i.offsetStart || 0,
+        index: i.index || 0
+      });
     });
   };
 
   /**
    * When an element is altered the index is set very high,
-   * this functions normalizes the indexes back to 0
+   * this functions normalizes to indexes back to 0
    * 
-   * @param {Interval[]} intervals 
-   * @returns {Interval[]}
+   * @param {Intervalp[]} intervals 
    */
   var normalizeIndex = function normalizeIndex(intervals) {
     var index = 0;
@@ -99,7 +98,7 @@
    * Sorts the intervals by index, then by start
    * 
    * @param {Interval[]} intervals 
-   * @return {Interval[]}
+   * @return {Interval[]} Interval array
    */
   var sort = function sort(intervals) {
     return intervals.sort(function (a, b) {
@@ -111,20 +110,20 @@
    * Returns a map of intervals grouped by the key property
    * 
    * @param {Interval[]} intervals 
-   * @returns {IntervalMap}
+   * @returns {IntervalMap} Map of index => interval[]
    */
   var groupByIndex = function groupByIndex(intervals) {
     return intervals.reduce(function (groups, interval) {
       (groups[interval.index] = groups[interval.index] || []).push(interval);
       return groups;
-    });
+    }, {});
   };
 
   /**
    * Merges all the groups by index
    * 
    * @param {IntervalMap} grouped 
-   * @returns {Interval[]}
+   * @returns {Interval[]} Interval array
    */
   var weightedMerge = function weightedMerge(grouped) {
     var flattened = null;
@@ -165,7 +164,7 @@
    * Merges a set of intervals with the same index and remove any overlaps, left to right
    * 
    * @param {Interval[]} intervals 
-   * @returns {Interval[]}
+   * @returns {Interval[]} Interval array
    */
   var merge = function merge(intervals) {
     if (intervals.length <= 1) return intervals;
@@ -200,7 +199,7 @@
    * @param {Interval[]} highIndexes
    * @param {Interval[]} lowIndexes
    * 
-   * @returns {Interval[]}
+   * @returns {Interval[]} Interval array
    */
   var combine = function combine(highIndexes, lowIndexes) {
     var highIndex = 0;
@@ -268,8 +267,6 @@
    *
    * @param {number} a
    * @param {number} b
-   * 
-   * @returns {1 | -1 | 0}
    */
   var cmp = function cmp(a, b) {
     if (a > b) return +1;

@@ -37,8 +37,4 @@ Indexes are normalized back to 0, so three intervals with indexes 3, 5 and 10 wi
   // ]
 ```
 
-## TODO
-
-* Add tests
-
   

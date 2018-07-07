@@ -12,49 +12,49 @@
   */
 
 /**
+ * @param {Interval} interval
+ */
+const calcStart = interval => interval.start + interval.offsetStart;
+
+/**
  * The algorithm first calculates real start and end times of each segment,
  * sorts them by priority, then start time.
  *
  * Finally it merges the segments by index so there are no overlapping
  * segments and those with highest index are on top.
  *
+ * @export
  * @param {Interval[]} intervals Segments to flatten
  * @returns {Interval[]} flattened Interval array
  */
-export const weightedIntervalMerge = intervals => {
+export const weightedIntervalMerge =  intervals => {
   if(intervals == null || intervals.length === 0) return [];
 
-  const copied = copy(intervals);
-  const sorted = sort(copied);
+  const sorted = sort(intervals);
   const normalized = normalizeIndex(sorted);
-  const grouped = groupByIndex(normalized);
+  const copied = copy(normalized);
+  const grouped = groupByIndex(copied);
 
   return weightedMerge(grouped);
 }
 
 /**
- * Returns the start time of an interval based on it's start and offset start
- * 
- * @param {Interval} interval 
- * @returns {number} 
- */
-const calcStart = interval => interval.start + interval.offsetStart;
-
-/**
  * Copies elements so original are unaltered
  * 
  * @param {Interval[]} intervals 
- * @returns {Interval[]}
  */
-const copy = intervals => intervals.map(i => ({ ...i }));
+const copy = (intervals) => intervals.map(i => ({ 
+  ...i,
+  offsetStart: i.offsetStart || 0,
+  index: i.index || 0,
+}));
   
 
 /**
  * When an element is altered the index is set very high,
- * this functions normalizes the indexes back to 0
+ * this functions normalizes to indexes back to 0
  * 
- * @param {Interval[]} intervals 
- * @returns {Interval[]}
+ * @param {Intervalp[]} intervals 
  */
 const normalizeIndex = intervals => {
   let index = 0;
@@ -74,28 +74,29 @@ const normalizeIndex = intervals => {
  * Sorts the intervals by index, then by start
  * 
  * @param {Interval[]} intervals 
- * @return {Interval[]}
+ * @return {Interval[]} Interval array
  */
-const sort = intervals => intervals.sort((a, b) => cmp(a.index, b.index) || cmp(calcStart(a), calcStart(b)));
+const sort = intervals => 
+  intervals.sort((a, b) => cmp(a.index, b.index) || cmp(calcStart(a), calcStart(b)));
 
 /**
  * Returns a map of intervals grouped by the key property
  * 
  * @param {Interval[]} intervals 
- * @returns {IntervalMap}
+ * @returns {IntervalMap} Map of index => interval[]
  */
 const groupByIndex = intervals =>
   intervals.reduce((groups, interval) => {
     (groups[interval.index] = groups[interval.index] || []).push(interval);
     return groups;
-  });
+  }, {});
 
 
 /**
  * Merges all the groups by index
  * 
  * @param {IntervalMap} grouped 
- * @returns {Interval[]}
+ * @returns {Interval[]} Interval array
  */
 const weightedMerge = grouped => {
   let flattened = null;
@@ -114,7 +115,7 @@ const weightedMerge = grouped => {
  * Merges a set of intervals with the same index and remove any overlaps, left to right
  * 
  * @param {Interval[]} intervals 
- * @returns {Interval[]}
+ * @returns {Interval[]} Interval array
  */
 const merge = intervals => {
   if (intervals.length <= 1) 
@@ -150,7 +151,7 @@ const merge = intervals => {
  * @param {Interval[]} highIndexes
  * @param {Interval[]} lowIndexes
  * 
- * @returns {Interval[]}
+ * @returns {Interval[]} Interval array
  */
 const combine = (highIndexes, lowIndexes) => {
   let highIndex = 0;
@@ -222,8 +223,6 @@ const combine = (highIndexes, lowIndexes) => {
  *
  * @param {number} a
  * @param {number} b
- * 
- * @returns {1 | -1 | 0}
  */
 const cmp = (a, b) => {
   if (a > b) return +1;
