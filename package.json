@@ -2,7 +2,7 @@
   "name": "weighted-interval-merge",
   "version": "0.1.1",
   "description": "",
-  "main": "index.js",
+  "main": "dist/weighted-interval-merge.js",
   "scripts": {
     "build": "rollup --config",
     "test": "echo \"Error: no test specified\" && exit 1"
