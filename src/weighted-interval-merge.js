@@ -24,10 +24,10 @@
 export const weightedIntervalMerge = intervals => {
   if(intervals == null || intervals.length === 0) return [];
 
-  const sorted = sort(intervals);
+  const copied = copy(intervals);
+  const sorted = sort(copied);
   const normalized = normalizeIndex(sorted);
-  const copied = copy(normalized);
-  const grouped = groupByIndex(copied);
+  const grouped = groupByIndex(normalized);
 
   return weightedMerge(grouped);
 }
