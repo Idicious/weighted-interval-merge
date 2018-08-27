@@ -275,7 +275,6 @@
   };
 
   exports.weightedIntervalMerge = weightedIntervalMerge;
-  exports.default = weightedIntervalMerge;
 
   Object.defineProperty(exports, '__esModule', { value: true });
 

@@ -1,15 +1,12 @@
-import babel from 'rollup-plugin-babel';
+import babel from "rollup-plugin-babel";
 
 // rollup.config.js
 export default {
-  input: 'index.js',
+  input: "index.js",
   output: {
-    file: 'dist/weighted-interval-merge.js',
-    format: 'umd',
-    name: 'intervalMerge',
-    exports: 'named'
+    file: "dist/weighted-interval-merge.js",
+    format: "umd",
+    name: "intervalMerge"
   },
-  plugins: [
-    babel(),
-  ]
+  plugins: [babel()]
 };

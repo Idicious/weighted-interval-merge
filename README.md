@@ -11,6 +11,7 @@ The method expects an input array with elements matching the following signature
 Indexes are normalized back to 1, so three intervals with indexes 3, 5 and 10 will be normalized to 1, 2, 3.
 
 ## Installation
+
 ```sh
   npm install --save weighted-interval-merge
 ```
@@ -18,23 +19,22 @@ Indexes are normalized back to 1, so three intervals with indexes 3, 5 and 10 wi
 ## Code example
 
 ```js
-  import intervalMerge from 'weighted-interval-merge';
+import { weightedIntervalMerge } from "weighted-interval-merge";
 
-  const intervals = [
-    { id: 1, start: 0, offsetStart: 1, end: 10, index: 0 },
-    { id: 2, start: 2, end: 7, index: 1 },
-    { id: 3, start: 4, end: 5, index: 2 },
-  ]
+const intervals = [
+  { id: 1, start: 0, offsetStart: 1, end: 10, index: 0 },
+  { id: 2, start: 2, end: 7, index: 1 },
+  { id: 3, start: 4, end: 5, index: 2 }
+];
 
-  const merged = intervalMerge(intervals);
+const merged = weightedIntervalMerge(intervals);
+console.log(merged);
 
-  // output [
-  //    { id: 1, start: 1, end: 2, index: 0 },
-  //    { id: 2, start: 2, end: 4, index: 1 },
-  //    { id: 3, start: 4, end: 5, index: 2 },
-  //    { id: 2, start: 5, end: 7, index: 1 },
-  //    { id: 1, start: 7, end: 10, index: 0 },
-  // ]
+// [
+//   { id: 1, start: 0, offsetStart: 1, end: 2, index: 1 },
+//   { id: 2, start: 2, end: 4, index: 2, offsetStart: 0 },
+//   { id: 3, start: 4, end: 5, index: 3, offsetStart: 0 },
+//   { id: 2, start: 2, end: 7, index: 2, offsetStart: 3 },
+//   { id: 1, start: 0, offsetStart: 7, end: 10, index: 1 }
+// ];
 ```
-
-  
