@@ -1,6 +1,6 @@
 {
   "name": "weighted-interval-merge",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "",
   "main": "dist/weighted-interval-merge.js",
   "types": "index.d.ts",
