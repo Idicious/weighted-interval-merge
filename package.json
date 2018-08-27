@@ -8,7 +8,13 @@
     "build": "rollup --config",
     "test": "jasmine"
   },
-  "keywords": [],
+  "keywords": [
+    "interval",
+    "merge",
+    "interval merge",
+    "weight",
+    "weighted"
+  ],
   "author": {
     "name": "David Sherman",
     "email": "thedcsherman@gmail.com"
