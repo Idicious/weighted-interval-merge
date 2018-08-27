@@ -1,8 +1,9 @@
 {
   "name": "weighted-interval-merge",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "",
   "main": "dist/weighted-interval-merge.js",
+  "types": "index.d.ts",
   "scripts": {
     "build": "rollup --config",
     "test": "jasmine"
