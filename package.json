@@ -8,8 +8,15 @@
     "test": "jasmine"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": {
+    "name": "David Sherman",
+    "email": "thedcsherman@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/idicious/weighted-interval-merge.git"
+  },
+  "license": "MIT",
   "dependencies": {},
   "devDependencies": {
     "babel-core": "^6.26.3",
